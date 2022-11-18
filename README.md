@@ -7,7 +7,7 @@ This application has been built to store the same domain objects in one of a var
 
 The application use Spring Java configuration and [bean profiles](http://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-profiles.html) to configure the application and the connection objects needed to use the persistence stores. It also uses the [Java CFEnv](https://github.com/pivotal-cf/java-cfenv/) library to inspect the environment when running on Cloud Foundry. See the [Cloud Foundry documentation](http://docs.cloudfoundry.org/buildpacks/java/spring-service-bindings.html) for details on configuring a Spring application for Cloud Foundry.
 
-## Tanzu Application Accelerator
+## Tanzu Application Platform Accelerator
 
 To add the accelerator in Tanzu Application Platform
 
