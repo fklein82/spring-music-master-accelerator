@@ -1,35 +1,33 @@
 accelerator:
-  displayName: Micropets Java Service
-  description: Tanzu Application Platform Accelerator to spin up a new service for the micropets app
-  iconUrl: https://github.com/bmoussaud/micropets-java-service-accelerator/raw/main/pet-silhouette-icons.png
+  displayName: Spring Music
+  description: Tanzu Application Platform Accelerator to spin up a new service for the Spring Music app
+  iconUrl: https://github.com/fklein82/spring-music-master-accelerator/blob/main/src/main/resources/static/img/music-icons.png
   tags:
     - java
     - spring
-    - micropets
+    - springmusic
   options:
-    - name: petKind
+    - name: musicKind
       label: "Kind"
       display: true
-      defaultValue: Bird
+      defaultValue: music
       required: true
     - name: pkgName
       label: Package
       description: The name of the package
       dataType: string
-      defaultValue: org.moussaud.micropets.pets
+      defaultValue: org.fklein82.music.spring
     - name: imageRegistry
       label: Image registry
       description: the image registry
       dataType: string
-      defaultValue: akseutap3registry.azurecr.io
+      defaultValue: registry.fklein.me
     - label: Database Type
       description: The type of database that services will connenct to.
       inputType: select
       defaultValue: h2
       name: dbType
       choices:
-        - value: azurePostgresql
-          text: Azure PostgreSQL
         - value: tanzuPostgresql
           text: Tanzu PostgreSQL
         - value: h2
