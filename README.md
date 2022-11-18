@@ -47,6 +47,22 @@ If no profile is provided, an in-memory relational database will be used. If any
 
 If more than one of these profiles is provided, the application will throw an exception and fail to start.
 
+## Running the application on Tanzu Application Platform
+
+When running on Tanzu Application Platform, the application will detect the type of database service bound to the application (if any). If a service of one of the supported types (MySQL, Postgres, Oracle, MongoDB, or Redis) is bound to the app, the appropriate Spring profile will be configured to use the database service. The connection strings and credentials needed to use the service will be extracted from the Kubernetes / secrets environment.
+
+If no bound services are found containing any of these values in the name, an in-memory relational database will be used.
+
+If more than one service containing any of these values is bound to the application, the application will throw an exception and fail to start.
+
+After installing the 'tanzu cli' [command-line interface for TAP](https://docs.vmware.com/en/VMware-Tanzu-Application-Platform/1.3/tap/GUID-install-tanzu-cli.html), targeting a Tanzu Application Platform instance, and logging in, the application can be built and pushed using these commands:
+
+~~~
+$ tanzu...
+~~~
+
+The application will be pushed using settings in the provided `manifest.yml` file. The output from the command will show the URL that has been assigned to the application.
+
 ## Running the application on Cloud Foundry
 
 When running on Cloud Foundry, the application will detect the type of database service bound to the application (if any). If a service of one of the supported types (MySQL, Postgres, Oracle, MongoDB, or Redis) is bound to the app, the appropriate Spring profile will be configured to use the database service. The connection strings and credentials needed to use the service will be extracted from the Cloud Foundry environment.
