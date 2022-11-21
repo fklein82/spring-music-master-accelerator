@@ -1,7 +1,7 @@
 accelerator:
   displayName: Spring Music
   description: Tanzu Application Platform Accelerator to spin up a new service for the Spring Music app
-  iconUrl: https://github.com/fklein82/spring-music-master-accelerator/blob/main/src/main/resources/static/img/music-icons.png
+  iconUrl: https://raw.githubusercontent.com/fklein82/spring-music-master-accelerator/main/music-icons.png
   tags:
     - java
     - spring
