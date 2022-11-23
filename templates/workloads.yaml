@@ -1,7 +1,7 @@
 #@ load("@ytt:data", "data")
 
-#@ def buildServiceClaimsBinding(usesDB):
-#@ if usesDB == True and data.values.dbType == "Postgresql":
+#@ def buildServiceClaimsBinding():
+#@ if data.values.dbType == "Postgresql":
   env:
   - name: SPRING_PROFILES_ACTIVE
     value: postgres
@@ -32,7 +32,7 @@ spec:
       url: https://github.com/fklein82/spring-music-master-accelerator
       ref:
         branch: main
-  serviceClaims: #@ buildServiceClaimsBinding(True)
+  serviceClaims: #@ buildServiceClaimsBinding()
   params:
     - name: annotations
       value:
