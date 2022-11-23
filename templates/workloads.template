@@ -1,3 +1,5 @@
+#@ load("@ytt:data", "data")
+
 apiVersion: carto.run/v1alpha1
 kind: Workload
 metadata:
@@ -15,6 +17,8 @@ spec:
       url: https://github.com/fklein82/spring-music-master-accelerator
       ref:
         branch: main
+
+#@ if data.values.dbType == "Postgresql":
   env:
     - name: SPRING_PROFILES_ACTIVE
       value: postgres
@@ -23,7 +27,9 @@ spec:
       ref:
         apiVersion: services.apps.tanzu.vmware.com/v1alpha1
         kind: ResourceClaim
-        name: vac-db-binding-compatible  
+        name: vac-db-binding-compatible
+#@ end
+  
   params:
     - name: annotations
       value:
