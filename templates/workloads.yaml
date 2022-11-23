@@ -10,6 +10,13 @@
 #@ end
 #@ end
 
+#@ def putEnv(envDB):
+#@ if envDB == True and data.values.dbType == "Postgresql":
+    - name: SPRING_PROFILES_ACTIVE
+      value: postgres
+#@ end
+#@ end
+
 
 ---
 apiVersion: carto.run/v1alpha1
@@ -30,6 +37,7 @@ spec:
       ref:
         branch: main
   serviceClaims: #@ buildServiceClaimsBinding(True)
+  env: #@ putEnv(True)
   params:
     - name: annotations
       value:
