@@ -35,7 +35,7 @@ accelerator:
       hidden: true
 engine:
   merge:
-  - include: [ "**" ]
+#  - include: [ "**" ]
   - include: ["**/templates/workloads.template"]
     chain:
     - type: YTT
@@ -44,7 +44,7 @@ engine:
 #        - text: "_NAMESPACE_"
 #          with: "#workloadNamespace"  
     - type: RewritePath
-      regex: 'templates/workloads.template'
+      regex: 'templates/workloads.yaml'
       rewriteTo: "'config/workloads-test.yaml'"
 
   - condition: "#createResourceClaim && ( #dbType == 'Postgresql') " 
