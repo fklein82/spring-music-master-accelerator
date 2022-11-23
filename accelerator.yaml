@@ -7,29 +7,26 @@ accelerator:
     - spring
     - springmusic
   options:
-    - name: musicKind
-      label: "Kind"
-      display: true
-      defaultValue: music
-      required: true
-    - name: pkgName
-      label: Package
-      description: The name of the package
-      dataType: string
-      defaultValue: org.fklein82.music.spring
     - name: imageRegistry
       label: Image registry
       description: the image registry
       dataType: string
       defaultValue: registry.fklein.me
+    - label: Workload Namespace
+      description:  The namespace where the application services will be deployed.  This field is needed for properly creating resource claims.
+      defaultValue: dev
+      name: workloadNamespace
+      inputType: text
+      dataType: string
+      required: true
     - label: Database Type
-      description: The type of database that services will connenct to.
+      description: The type of database that services will connect to.
       inputType: select
       defaultValue: h2
       name: dbType
       choices:
-        - value: tanzuPostgresql
-          text: Tanzu PostgreSQL
+        - value: Postgresql
+          text: PostgreSQL (from VMware Application Catalog)
         - value: h2
           text: H2 (In Memory DB)
       required: true
@@ -42,88 +39,25 @@ accelerator:
       required: true
       hidden: true
 engine:
-  let:
-    - name: devNamespace
-      expression: "'dev-tap'"
-    - name: resourcesNamespace
-      expression: "'database-instances-fr'"
-    - name: azureLocation
-      expression: "'francecentral'"
-    - name: lowerPluralPetKind
-      expression: "#petKind.toLowerCase()+'s'"
-    - name: kebabDbType                  
-      expression: "#camel2Kebab(#dbType)"
-  chain:
-    - merge:
-        - include: [".mvn/**", "mvnw", "mvnw.cmd"]
-        - include: ["pom.xml"]
-          chain:
-            - type: ReplaceText
-              substitutions:
-                - text: my-petservice
-                  with: "#lowerPluralPetKind"
-                - text: PetKind
-                  with: "#petKind"
-                - text: pkgName
-                  with: "#pkgName"
-        - include:
-            [
-              "config/**",
-              ".gitignore",
-              ".tanzuignore",
-              "README.md",
-              "apply_workload.sh",
-              "git-push.sh",
-              "clean.sh",
-              "Tiltfile",
-              "catalog-info.yaml",
-              "src/main/resources/schema-*.sql",
-              "src/main/resources/application.yml",
-              "src/main/resources/application-postgres.yml",
-            ]
-          chain:
-            - type: ReplaceText
-              substitutions:
-                - text: my-petservice
-                  with: "#lowerPluralPetKind"
-                - text: PetKind
-                  with: "#petKind"
-                - text: lowercasePetKind
-                  with: "#lowerPluralPetKind"
-                - text: imageRegistry
-                  with: "#imageRegistry.toLowerCase()"
-                - text: PET_KIND
-                  with: "#petKind"
-                - text: dbType                  
-                  with: "#kebabDbType"
-        - include: ["**/*.java"]
-          chain:
-            - type: ReplaceText
-              substitutions:
-                - text: PetKind
-                  with: "#petKind"
-                - text: lowercasePetKind
-                  with: "#lowerPluralPetKind"
-            - type: OpenRewriteRecipe
-              recipe: org.openrewrite.java.ChangePackage
-              options:
-                oldPackageName: "'com.renamethis'"
-                newPackageName: "#pkgName"        
-        - condition: "#createResourceClaim && ( #dbType == 'azurePostgresql' ||#dbType == 'tanzuPostgresql') " 
-          include: ["**/tanzu-postgresql.yaml"]
-          chain:
-            - type: YTT
-            - type: RewritePath
-              regex: "templates/tanzu-postgresql.yaml"
-              rewriteTo: "'config/app-operator/tanzu-postgresql.yaml'"
-        - condition: "#createResourceClaim && ( #dbType == 'azurePostgresql' ||#dbType == 'tanzuPostgresql') "
-          include: ["**/azure-postgresql.yaml"]
-          chain:
-            - type: YTT
-            - type: RewritePath
-              regex: "templates/azure-postgresql.yaml"
-              rewriteTo: "'config/app-operator/azure-postgresql.yaml'"
-    - chain:
-        - type: RewritePath
-          regex: (.*)PetKind(.*)
-          rewriteTo: "#g1 + #petKind + #g2"
+  merge:
+  - include: [ "**" ]
+  - include: ["**/config/workload.yaml", "**/templates/workloads.template"]
+    chain:
+    - type: ReplaceText
+      substitutions:
+        - text: "_NAMESPACE_"
+          with: "#workloadNamespace"  
+    - type: RewritePath
+      regex: 'templates/workloads.template'
+      rewriteTo: "'config/workloads-test.yaml'"
+
+  - condition: "#createResourceClaim && ( #dbType == 'Postgresql') " 
+    include: ["**/templates/oss-postgresql.yaml"]
+    chain:
+    - type: ReplaceText
+      substitutions:
+        - text: "_NAMESPACE_"
+          with: "#workloadNamespace" 
+    - type: RewritePath
+      regex: 'templates/oss-postgresql.yaml'
+      rewriteTo: "'config/oss-postgresql-test.yaml'"
