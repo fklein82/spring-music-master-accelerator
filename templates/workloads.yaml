@@ -12,18 +12,10 @@
 #@ end
 
 #@ def buildAppEnv(addDBProf):
-#@ profiles = ""
-
 #@ if addDBProf == True and data.values.dbType == "Postgresql":
-#@ if profiles != "":
-#@    profiles = profiles + ","
-#@ end
-#@ profiles = profiles + "Postgresql"
-#@ end
 
-#@ if profiles != "":
   - name: SPRING_PROFILES_ACTIVE
-    value: #@ profiles
+    value: postgres
 #@ end
 #@ end
 
