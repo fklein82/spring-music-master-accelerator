@@ -2,20 +2,11 @@
 
 #@ def buildServiceClaimsBinding(usesDB):
 #@ if usesDB == True and data.values.dbType == "Postgresql":
-  serviceClaims:
     - name: music-database
       ref:
         apiVersion: services.apps.tanzu.vmware.com/v1alpha1
         kind: ResourceClaim
         name: vac-db-binding-compatible
-#@ end
-#@ end
-
-#@ def buildAppEnv():
-#@ if data.values.dbType == "Postgresql":
-env:
-  - name: SPRING_PROFILES_ACTIVE
-    value: postgres
 #@ end
 #@ end
 
@@ -32,7 +23,6 @@ metadata:
     app.kubernetes.io/part-of: spring-music
     apps.tanzu.vmware.com/has-tests: "true"
 spec:
-  #@ buildAppEnv()
   serviceAccountName: default
   source:
     git:
