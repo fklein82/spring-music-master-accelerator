@@ -12,6 +12,7 @@
         kind: ResourceClaim
         name: vac-db-binding-compatible
 #@ end
+#@ end
 
 
 ---
