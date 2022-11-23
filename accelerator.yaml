@@ -35,8 +35,8 @@ accelerator:
       hidden: true
 engine:
   merge:
-#  - include: [ "**" ]
-  - include: ["**/templates/workloads.template"]
+  - include: [ "**" ]
+  - include: ["**/templates/workloads.yaml"]
     chain:
     - type: YTT
 #    - type: ReplaceText
