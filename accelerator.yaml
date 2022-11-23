@@ -1,5 +1,5 @@
 accelerator:
-  displayName: ABCD Spring Music
+  displayName: Spring Music
   description: Tanzu Application Platform Accelerator to spin up a new service for the Spring Music app
   iconUrl: https://raw.githubusercontent.com/fklein82/spring-music-master-accelerator/main/music-icons.png
   tags:
