@@ -1,5 +1,32 @@
 #@ load("@ytt:data", "data")
 
+#@ def buildServiceClaimsBinding(usesDB):
+#@ if usesDB == True and data.values.dbType == "Postgresql":
+  serviceClaims:
+    - name: music-database
+      ref:
+        apiVersion: services.apps.tanzu.vmware.com/v1alpha1
+        kind: ResourceClaim
+        name: vac-db-binding-compatible
+#@ end
+
+#@ def buildAppEnv(addDBProf):
+#@ profiles = ""
+
+#@ if addDBProf == True and data.values.dbType == "Postgresql":
+#@ if profiles != "":
+#@    profiles = profiles + ","
+#@ end
+#@ profiles = profiles + "Postgresql"
+#@ end
+
+#@ if profiles != "":
+  - name: SPRING_PROFILES_ACTIVE
+    value: #@ profiles
+#@ end
+#@ end
+
+
 ---
 apiVersion: carto.run/v1alpha1
 kind: Workload
@@ -12,12 +39,14 @@ metadata:
     app.kubernetes.io/part-of: spring-music
     apps.tanzu.vmware.com/has-tests: "true"
 spec:
+  env: #@ buildAppEnv(True)
   serviceAccountName: default
   source:
     git:
       url: https://github.com/fklein82/spring-music-master-accelerator
       ref:
         branch: main
+  serviceClaims: #@ buildServiceClaimsBinding(True)
   params:
     - name: annotations
       value:
