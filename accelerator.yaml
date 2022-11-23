@@ -41,8 +41,9 @@ accelerator:
 engine:
   merge:
   - include: [ "**" ]
-  - include: ["**/config/workload.yaml", "**/templates/workloads.template"]
+  - include: ["**/templates/workloads.template"]
     chain:
+    - type: YTT
     - type: ReplaceText
       substitutions:
         - text: "_NAMESPACE_"
