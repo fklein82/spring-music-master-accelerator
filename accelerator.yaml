@@ -7,11 +7,6 @@ accelerator:
     - spring
     - springmusic
   options:
-    - name: imageRegistry
-      label: Image registry
-      description: the image registry
-      dataType: string
-      defaultValue: registry.fklein.me
     - label: Workload Namespace
       description:  The namespace where the application services will be deployed.  This field is needed for properly creating resource claims.
       defaultValue: dev
@@ -44,10 +39,10 @@ engine:
   - include: ["**/templates/workloads.template"]
     chain:
     - type: YTT
-    - type: ReplaceText
-      substitutions:
-        - text: "_NAMESPACE_"
-          with: "#workloadNamespace"  
+#    - type: ReplaceText
+#      substitutions:
+#        - text: "_NAMESPACE_"
+#          with: "#workloadNamespace"  
     - type: RewritePath
       regex: 'templates/workloads.template'
       rewriteTo: "'config/workloads-test.yaml'"
