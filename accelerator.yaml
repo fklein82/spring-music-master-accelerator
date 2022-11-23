@@ -45,7 +45,7 @@ engine:
 #          with: "#workloadNamespace"  
     - type: RewritePath
       regex: 'templates/workloads.template'
-      rewriteTo: "'config/workloads-test.yaml'"
+      rewriteTo: "'workloads-test.yaml'"
 
   - condition: "#createResourceClaim && ( #dbType == 'Postgresql') " 
     include: ["**/templates/oss-postgresql.yaml"]
