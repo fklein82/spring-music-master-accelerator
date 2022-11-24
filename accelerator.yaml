@@ -75,7 +75,8 @@ engine:
       rewriteTo: "'config/helm/helm-values-postgres.yaml'"  
 
 # TEMPLATING README.md FILE
-  - include: ["**/templates/README.md"]
+  - condition: "#createResourceClaim && ( #dbType == 'Postgresql')"
+    include: ["**/templates/README.md"]
     chain:
     - type: YTT
     - type: RewritePath
