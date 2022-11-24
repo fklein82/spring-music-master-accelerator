@@ -80,5 +80,5 @@ engine:
     - type: YTT
     - type: RewritePath
       regex: 'templates/README.md'
-      rewriteTo: "'README.md'"  
+      rewriteTo: "'README-test.md'"  
 
