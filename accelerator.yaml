@@ -76,10 +76,10 @@ engine:
 
 # TEMPLATING README.md FILE
   - condition: "#createResourceClaim && ( #dbType == 'Postgresql')"
-    include: ["**/templates/README.md"]
+    include: ["**/templates/README.yaml"]
     chain:
     - type: YTT
     - type: RewritePath
-      regex: 'templates/README.md'
+      regex: 'templates/README.yaml'
       rewriteTo: "'README-test.md'"  
 
