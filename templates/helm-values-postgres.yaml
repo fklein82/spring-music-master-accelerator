@@ -6,7 +6,7 @@ primary:
     storageClass: "tanzu-sp"
 
 auth:
-  database: #@ data.values.dbname
+  database: #@ data.values.dbName
   username: #@ data.values.dbUser
 
 global:
