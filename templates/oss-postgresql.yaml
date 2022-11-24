@@ -37,7 +37,7 @@ items:
 - apiVersion: services.apps.tanzu.vmware.com/v1alpha1
   kind: ResourceClaim
   metadata:
-    name: #@ data.values.secretName
+    name: music-database
     namespace: #@ data.values.workloadNamespace
   spec:
     ref:
