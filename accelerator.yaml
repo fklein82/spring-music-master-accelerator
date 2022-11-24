@@ -48,7 +48,7 @@ engine:
       expression: "'postgresql-music'"
   merge:
   - exclude: 
-      ["**/templates/**""]
+      ["**/templates/**"]
 #  - include: [ "**" ]
   
 # TEMPLATING THE WORKLOAD.YAML FILE
