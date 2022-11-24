@@ -17,7 +17,7 @@ accelerator:
     - label: Database Type
       description: The type of database that services will connect to.
       inputType: select
-      defaultValue: h2
+      defaultValue: Postgresql
       name: dbType
       choices:
         - value: Postgresql
