@@ -47,6 +47,7 @@ engine:
     - name: dbHost
       expression: "'postgresql-music'"
   merge:
+  - exclude: ["**/templates/**"]
   - include: [ "**" ]
   
 # TEMPLATING THE WORKLOAD.YAML FILE
