@@ -25,12 +25,12 @@ type: Opaque
 stringData:
   type: postgresql
   provider: vac
-  host: my-postgresql
+  host: #@ data.values.dbHost
   port: "5432"
-  database: "music"
-  username: "postgres"
-  password: "postgres"
-  postgres-password: "postgres"  
+  database: #@ data.values.dbName
+  username: #@ data.values.dbUser
+  password: #@ data.values.dbPassword
+  postgres-password: #@ data.values.dbPassword
 ---
 apiVersion: v1
 items:
