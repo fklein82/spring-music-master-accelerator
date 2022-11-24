@@ -75,10 +75,10 @@ engine:
       rewriteTo: "'config/helm/helm-values-postgres.yaml'"  
 
 # TEMPLATING README.md FILE
-  - include: ["**/templates/README.yaml"]
+  - include: ["**/templates/README.md"]
     chain:
     - type: YTT
     - type: RewritePath
-      regex: 'templates/README.yaml'
+      regex: 'templates/README.md'
       rewriteTo: "'README-test.md'"  
 
