@@ -1,3 +1,5 @@
+#@ load("@ytt:data", "data")
+---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
@@ -17,8 +19,8 @@ rules:
 apiVersion: v1
 kind: Secret
 metadata:
-  name: vac-db-binding-compatible
-  namespace: _NAMESPACE_
+  name: #@ data.values.secretName
+  namespace:  #@ data.values.workloadNamespace
 type: Opaque
 stringData:
   type: postgresql
@@ -35,10 +37,10 @@ items:
 - apiVersion: services.apps.tanzu.vmware.com/v1alpha1
   kind: ResourceClaim
   metadata:
-    name: vac-db-binding-compatible
-    namespace: _NAMESPACE_
+    name: #@ data.values.secretName
+    namespace: #@ data.values.workloadNamespace
   spec:
     ref:
       apiVersion: v1
       kind: Secret
-      name: vac-db-binding-compatible
+      name: #@ data.values.secretName

@@ -34,8 +34,13 @@ accelerator:
       required: true
       hidden: true
 engine:
+# "HARD CODED" VALUES 
+  let:
+    - name: secretName
+      expression: "'vac-db-binding-compatible'"
   merge:
   - include: [ "**" ]
+# TEMPLATING THE WORKLOAD.YAML FILE
   - include: ["**/templates/workloads.yaml"]
     chain:
     - type: YTT
@@ -45,15 +50,27 @@ engine:
 #          with: "#workloadNamespace"  
     - type: RewritePath
       regex: 'templates/workloads.yaml'
-      rewriteTo: "'config/workloads-test.yaml'"
-
+      rewriteTo: "'config/workloads.yaml'"
+# IF RESOURCE CLAIM AND POSTGRESQL DATABASE CREATE A TEMPLATE OF RESOURCE CLAIM
   - condition: "#createResourceClaim && ( #dbType == 'Postgresql') " 
     include: ["**/templates/oss-postgresql.yaml"]
     chain:
-    - type: ReplaceText
-      substitutions:
-        - text: "_NAMESPACE_"
-          with: "#workloadNamespace" 
+    - type: YTT
+#    - type: ReplaceText
+#      substitutions:
+#        - text: "_NAMESPACE_"
+#          with: "#workloadNamespace"  
     - type: RewritePath
       regex: 'templates/oss-postgresql.yaml'
-      rewriteTo: "'config/oss-postgresql-test.yaml'"
+      rewriteTo: "'config/postgresql/oss-postgresql.yaml'"
+# TEMPLATING VALUES.YAML FILE FOR VAC HELM CHART DEPLOYMENT - POSTGRESQL
+  - include: ["**/templates/helm-values-postgres.yaml"]
+    chain:
+    - type: YTT
+#    - type: ReplaceText
+#      substitutions:
+#        - text: "_NAMESPACE_"
+#          with: "#workloadNamespace"  
+    - type: RewritePath
+      regex: 'templates/helm-values-postgres.yaml'
+      rewriteTo: "'config/helm/helm-values-postgres.yaml'"  

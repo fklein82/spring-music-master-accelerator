@@ -1,3 +1,5 @@
+#@ load("@ytt:data", "data")
+---
 primary:
   persistence:
     enabled: true
@@ -10,4 +12,4 @@ auth:
 global:
   postgresql:
     auth:      
-      existingSecret: "vac-db-binding-compatible"
+      existingSecret: #@ data.values.secretName

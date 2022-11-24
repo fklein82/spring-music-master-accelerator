@@ -6,7 +6,7 @@
       ref:
         apiVersion: services.apps.tanzu.vmware.com/v1alpha1
         kind: ResourceClaim
-        name: vac-db-binding-compatible
+        name: #@ data.values.secretName
 #@ end
 #@ end
 
