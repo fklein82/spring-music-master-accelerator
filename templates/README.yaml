@@ -1,4 +1,5 @@
 #@ load("@ytt:data", "data")
+---
 
 Spring Music
 ============
@@ -18,7 +19,8 @@ $ kubectl apply -f ./config/postgresql/oss-postgresql/yaml
 
 #### Deploy the database with the helm chart provided by VMware Application Catalog
 ~~~
-$ helm install -f ./config/helm/helm-values-postgresql.yaml #@ data.values.dbHost oci://registry.cloud-garage.net/library/postgresql
+$ helm install -f ./config/helm/helm-values-postgresql.yaml #@ data.values.dbHost
+ oci://registry.cloud-garage.net/library/postgresql
 ~~~
 Please allow some time for the Database to be deployed
 
