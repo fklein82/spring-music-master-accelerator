@@ -10,8 +10,6 @@ This application has been built to store the same domain objects in one of a var
 The application use Spring Java configuration and [bean profiles](http://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-profiles.html) to configure the application and the connection objects needed to use the persistence stores. It also uses the [Java CFEnv](https://github.com/pivotal-cf/java-cfenv/) library to inspect the environment when running on Cloud Foundry. See the [Cloud Foundry documentation](http://docs.cloudfoundry.org/buildpacks/java/spring-service-bindings.html) for details on configuring a Spring application for Cloud Foundry.
 
 ## Steps to perform to deploy the application
-#@ if data.values.dbType == "Postgresql":
-
 ### Deploy the database packaged by VMware Application Catalog
 #### Create all the secrets needed for the databse 
 ~~~
@@ -23,7 +21,6 @@ $ kubectl apply -f ./config/postgresql/oss-postgresql/yaml
 $ helm install -f ./config/helm/helm-values-postgresql.yaml #@ data.values.dbHost oci://registry.cloud-garage.net/library/postgresql
 ~~~
 Please allow some time for the Database to be deployed
-#@ end
 
 ### Deploy the Tanzu Application Platform workload to use this DB
 ~~~
